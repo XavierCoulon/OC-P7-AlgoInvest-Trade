@@ -2,7 +2,7 @@ import csv
 import time
 
 # Création de tuples pour chaque action - coùut de l'action - % profit depuis fichier csv
-with open("data/dataset1_test.csv", mode="r") as file:
+with open("data/dataset2.csv", mode="r") as file:
 	reader = csv.reader(file)
 	next(reader)
 
