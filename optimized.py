@@ -1,25 +1,26 @@
 import csv
 import time
+from memory_profiler import profile
 
 # Création de tuples pour chaque action - coùut de l'action - % profit depuis fichier csv
-with open("data/dataset2.csv", mode="r") as file:
+with open("data/dataset1.csv", mode="r") as file:
 	reader = csv.reader(file)
 	next(reader)
-
-	# for i in reader:
-	#	print(round(float(i[1])*100, 0))
-
-	# Pour dataset1 et 2
 	data = [tuple([row[0], round(int(float(row[1])*100), 0), int(round((float(row[1]) * float(row[2]) / 100), 2)*100)]) for row in reader if round(int(float(row[1])*100), 0) > 0]
+	print(len(data))
 
-	# Pour dataset
-	# data = [tuple([row[0], int(row[1]), round((float(row[1]) * float(row[2]) / 100), 2)]) for row in reader]
-
-	# print(data)
-
-
-# Aglo dynamique
+# Algorithme dynamique
 def dynamique(maximum, actions):
+	"""
+
+	Args:
+		maximum (int): montant maximum
+		actions (list): liste initiale de tuples (nom de l'aciton, prix de l'action, profit)
+
+	Returns:
+
+	"""
+
 	matrice = [[0 for x in range(maximum + 1)] for x in range(len(actions) + 1)]
 
 	for i in range(1, len(actions) + 1):
@@ -45,7 +46,15 @@ def dynamique(maximum, actions):
 	return matrice[-1][-1], actions_selectionnees
 
 
-start = time.perf_counter()
-print(dynamique(50000, data))
-stop = time.perf_counter()
-print(stop-start)
+#@profile
+def main():
+	start = time.perf_counter()
+	result = dynamique(50000, data)
+	stop = time.perf_counter()
+	print(f"Profit max: {round(result[0], 2)}€")
+	print(f"Temps de traitement: {round(stop - start, 2)}s")
+	for action in result[1]:
+		print(action[0])
+
+
+main()
