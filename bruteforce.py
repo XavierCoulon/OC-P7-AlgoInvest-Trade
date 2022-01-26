@@ -1,6 +1,5 @@
 import csv
 import time
-from memory_profiler import profile
 
 # Création de tuples pour chaque action - coùut de l'action - % profit depuis fichier csv
 with open("data/dataset.csv", mode="r") as file:
@@ -35,17 +34,19 @@ def force_brute(maximum, actions, actions_selectionnees=[]):
 		return sum([action[2] for action in actions_selectionnees]), actions_selectionnees
 
 
-#@profile
 def main():
 	start = time.perf_counter()
 	result = force_brute(500, data)
 	stop = time.perf_counter()
-	print(f"Profit max: {round(result[0], 2)}€")
-	print(f"Temps de traitement: {round(stop-start, 2)}s")
 	for action in result[1]:
 		print(action[0])
+	print(f"Profit max: {round(result[0], 2)}€")
+	print(f"Somme dépensée: {sum([action[1] for action in result[1]])}€")
+	print(f"Temps de traitement: {round(stop-start, 2)}s")
 
 
 main()
+
+
 
 
