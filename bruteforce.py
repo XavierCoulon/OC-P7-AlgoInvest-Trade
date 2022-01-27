@@ -1,7 +1,7 @@
 import csv
 import time
 
-# Création de tuples pour chaque action - coùut de l'action - % profit depuis fichier csv
+# Création de tuples pour chaque action depuis fichier csv: nom de l'action, coût de l'action, % profit
 with open("data/dataset.csv", mode="r") as file:
 	reader = csv.reader(file)
 	next(reader)
@@ -11,21 +11,20 @@ with open("data/dataset.csv", mode="r") as file:
 # Fonction force brute, récursive, testant toutes les combinaisons possibles
 def force_brute(maximum, actions, actions_selectionnees=[]):
 	"""
-
 	Args:
 		maximum (int): montant maximum
 		actions (list): liste initiale de tuples (nom de l'aciton, prix de l'action, profit)
 		actions_selectionnees (list): liste finale d'actions sélectionnées
 
 	Returns:
-
-
+		combinaison générant le plus de profit (tuple): profit et actions sélectionnées
 	"""
 	if actions:
 		action = actions[0]
 		profit_sans_action, liste_sans_action = force_brute(maximum, actions[1:], actions_selectionnees)
 		if action[1] <= maximum:
-			profit_avec_action, liste_avec_action = force_brute(maximum - action[1], actions[1:], actions_selectionnees + [action])
+			profit_avec_action, liste_avec_action = \
+				force_brute(maximum - action[1], actions[1:], actions_selectionnees + [action])
 			if profit_sans_action < profit_avec_action:
 				return profit_avec_action, liste_avec_action
 
@@ -46,7 +45,3 @@ def main():
 
 
 main()
-
-
-
-
