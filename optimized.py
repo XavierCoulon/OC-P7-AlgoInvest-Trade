@@ -7,15 +7,13 @@ FILE = "data/dataset1.csv"
 with open(FILE, mode="r") as file:
 	reader = csv.reader(file)
 	next(reader)
-	if FILE == "data/dataset.csv":
-		data = [tuple([row[0], int(row[1]), round((float(row[1]) * float(row[2]) / 100), 2)]) for row in reader]
-	# Passage en centimes pour les jeux de données != dataset.csv
-	else:
-		data = []
-		for row in reader:
-			if round(int(float(row[1]) * 100), 0) > 0:
-				data.append(
-					tuple([row[0], round(int(float(row[1]) * 100), 0), int(round((float(row[1]) * float(row[2]) / 100), 2) * 100)]))
+
+	# Non sélection des actions dont le montant est <= 0€ et profit <= 0% + passage en centimes
+	data = []
+	for row in reader:
+		if float(row[1]) > 0:
+			data.append(
+				tuple([row[0], int(float(row[1]) * 100), float(row[1]) * float(row[2])]))
 
 
 # Algorithme dynamique
@@ -43,7 +41,7 @@ def optimized(maximum, actions):
 			else:
 				matrice[y][x] = matrice[y - 1][x]
 
-	# Retrouver les éléments en fonction de la somme
+	# Retrouver les actions sélections en balayant en balayant la matrice en sens inverse
 	n = len(actions)
 	actions_selectionnees = []
 
@@ -64,12 +62,8 @@ def main():
 	stop = time.perf_counter()
 	for action in result[1]:
 		print(action[0])
-	if FILE == "data/dataset.csv":
-		print(f"Profit max: {round(result[0], 2)}€")
-		print(f"Somme dépensée: {sum([action[1] for action in result[1]])}€")
-	else:
-		print(f"Profit max: {round(result[0], 2)/100}€")
-		print(f"Somme dépensée: {sum([action[1]/100 for action in result[1]])}€")
+	print(f"Profit max: {round(result[0] / 100, 2)}€")
+	print(f"Somme dépensée: {sum([action[1]/100 for action in result[1]])}€")
 	print(f"Temps de traitement: {round(stop - start, 2)}s")
 
 

@@ -5,7 +5,10 @@ import time
 with open("data/dataset.csv", mode="r") as file:
 	reader = csv.reader(file)
 	next(reader)
-	data = [tuple([row[0], int(row[1]), round((float(row[1]) * float(row[2]) / 100), 2)]) for row in reader]
+	data = [tuple([row[0], float(row[1]), float(row[1]) * float(row[2]) / 100]) for row in reader]
+
+# Jeu de données éventuel pour soutenance, avec 3 actions.
+soutenance = [("action_1", 4, 6), ("action_2", 3, 5), ("action_3", 2, 4)]
 
 
 # Fonction force brute, récursive, testant toutes les combinaisons possibles
@@ -19,6 +22,8 @@ def force_brute(maximum, actions, actions_selectionnees=[]):
 	Returns:
 		combinaison générant le plus de profit (tuple): profit et actions sélectionnées
 	"""
+	# print("Force Brute", maximum, actions, actions_selectionnees)
+
 	if actions:
 		action = actions[0]
 		profit_sans_action, liste_sans_action = force_brute(maximum, actions[1:], actions_selectionnees)
