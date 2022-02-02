@@ -22,7 +22,6 @@ def force_brute(maximum, actions, actions_selectionnees=[]):
 	Returns:
 		combinaison générant le plus de profit (tuple): profit et actions sélectionnées
 	"""
-	# print("Force Brute", maximum, actions, actions_selectionnees)
 
 	if actions:
 		action = actions[0]
@@ -32,7 +31,6 @@ def force_brute(maximum, actions, actions_selectionnees=[]):
 				force_brute(maximum - action[1], actions[1:], actions_selectionnees + [action])
 			if profit_sans_action < profit_avec_action:
 				return profit_avec_action, liste_avec_action
-
 		return profit_sans_action, liste_sans_action
 	else:
 		return sum([action[2] for action in actions_selectionnees]), actions_selectionnees

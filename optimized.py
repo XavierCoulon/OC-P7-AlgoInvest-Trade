@@ -1,7 +1,7 @@
 import csv
 import time
 
-FILE = "data/dataset1.csv"
+FILE = "data/dataset2.csv"
 
 # Création de tuples pour chaque action depuis fichier FILE: nom de l'action, coût de l'action, % profit
 with open(FILE, mode="r") as file:
@@ -58,7 +58,7 @@ def optimized(maximum, actions):
 
 def main():
 	start = time.perf_counter()
-	result = optimized(50000, data)
+	result = optimized(48924, data)
 	stop = time.perf_counter()
 	for action in result[1]:
 		print(action[0])
