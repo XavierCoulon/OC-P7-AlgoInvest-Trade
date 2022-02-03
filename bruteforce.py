@@ -12,7 +12,7 @@ soutenance = [("action_1", 4, 6), ("action_2", 3, 5), ("action_3", 2, 4)]
 
 
 # Fonction force brute, récursive, testant toutes les combinaisons possibles
-def force_brute(maximum, actions, actions_selectionnees=[]):
+def force_brute(maximum, actions, actions_selectionnees=None):
 	"""
 	Args:
 		maximum (int): montant maximum
@@ -22,6 +22,9 @@ def force_brute(maximum, actions, actions_selectionnees=[]):
 	Returns:
 		combinaison générant le plus de profit (tuple): profit et actions sélectionnées
 	"""
+
+	if actions_selectionnees is None:
+		actions_selectionnees = []
 
 	if actions:
 		action = actions[0]
